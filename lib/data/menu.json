@@ -1,56 +1,58 @@
 [
     {
         "id": "1",
-        "name": "Chicken Popcorn",
-        "price": 179,
-        "category": "Quick Bites",
-        "image": "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?q=80&w=2070&auto=format&fit=crop",
-        "tags": []
-    },
-    {
-        "id": "2",
-        "name": "Naga Fire Bites",
-        "price": 239,
-        "category": "Quick Bites",
-        "image": "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?q=80&w=2070&auto=format&fit=crop",
+        "name": "Classic Espresso",
+        "price": 120,
+        "category": "Drinks",
+        "image": "https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?q=80&w=2070&auto=format&fit=crop",
         "tags": [
-            "spicy"
+            "bestseller"
         ]
     },
     {
+        "id": "2",
+        "name": "Hazelnut Latte",
+        "price": 180,
+        "category": "Drinks",
+        "image": "https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=2052&auto=format&fit=crop",
+        "tags": []
+    },
+    {
         "id": "3",
-        "name": "Bukhari Rice",
-        "price": 349,
-        "category": "Heavy Hitters",
-        "image": "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?q=80&w=2070&auto=format&fit=crop",
+        "name": "Buttery Croissant",
+        "price": 150,
+        "category": "Breakfast",
+        "image": "https://images.unsplash.com/photo-1555507036-ab1f40388085?q=80&w=1926&auto=format&fit=crop",
         "tags": [
-            "bestseller"
+            "fresh"
         ]
     },
     {
         "id": "4",
-        "name": "Cream'son Pasta",
-        "price": 289,
-        "category": "Heavy Hitters",
-        "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1974&auto=format&fit=crop",
-        "tags": []
+        "name": "Avocado Sourdough Toast",
+        "price": 250,
+        "category": "Breakfast",
+        "image": "https://images.unsplash.com/photo-1588137372308-15f75323a51d?q=80&w=2070&auto=format&fit=crop",
+        "tags": [
+            "healthy"
+        ]
     },
     {
         "id": "5",
-        "name": "Sizzling Chicken",
-        "price": 120,
-        "category": "Sides",
-        "image": "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?q=80&w=2070&auto=format&fit=crop",
-        "tags": []
+        "name": "New York Cheesecake",
+        "price": 300,
+        "category": "Dessert",
+        "image": "https://images.unsplash.com/photo-1524351199678-941a58a3df50?q=80&w=2071&auto=format&fit=crop",
+        "tags": [
+            "sweet"
+        ]
     },
     {
         "id": "6",
-        "name": "Big-Belly Cheesy Pasta",
-        "price": 399,
-        "category": "Heavy Hitters",
-        "image": "https://images.unsplash.com/photo-1626844131082-256783844137?q=80&w=1935&auto=format&fit=crop",
-        "tags": [
-            "bestseller"
-        ]
+        "name": "Grilled Chicken Panini",
+        "price": 280,
+        "category": "Lunch",
+        "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?q=80&w=2073&auto=format&fit=crop",
+        "tags": []
     }
 ]

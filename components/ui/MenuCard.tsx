@@ -35,7 +35,7 @@ export default function MenuCard({ id, name, price, image, tags }: MenuCardProps
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 {/* Tags */}
-                <div className="absolute top-2 left-2 flex gap-2">
+                <div className="absolute top-2 left-2 flex gap-2 flex-wrap">
                     {tags.includes("spicy") && (
                         <span className="flex items-center gap-1 bg-red-600 text-white px-2 py-1 rounded-full text-xs font-bold animate-pulse shadow-md font-sans">
                             <Flame size={12} fill="currentColor" /> Spicy
@@ -44,6 +44,21 @@ export default function MenuCard({ id, name, price, image, tags }: MenuCardProps
                     {tags.includes("bestseller") && (
                         <span className="flex items-center gap-1 bg-white border-2 border-latte text-espresso px-2 py-1 rounded-full text-xs font-bold shadow-sm font-sans">
                             <Star size={12} className="text-latte" fill="currentColor" /> Best Seller
+                        </span>
+                    )}
+                    {tags.includes("fresh") && (
+                        <span className="flex items-center gap-1 bg-sage text-white px-2 py-1 rounded-full text-xs font-bold shadow-md font-sans">
+                            Fresh
+                        </span>
+                    )}
+                    {tags.includes("healthy") && (
+                        <span className="flex items-center gap-1 bg-green-100 text-green-800 border border-green-200 px-2 py-1 rounded-full text-xs font-bold shadow-sm font-sans">
+                            Healthy
+                        </span>
+                    )}
+                    {tags.includes("sweet") && (
+                        <span className="flex items-center gap-1 bg-pink-100 text-pink-800 border border-pink-200 px-2 py-1 rounded-full text-xs font-bold shadow-sm font-sans">
+                            Sweet
                         </span>
                     )}
                 </div>
