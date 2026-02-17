@@ -1,17 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { CheckCircle, ArrowRight, Home } from "lucide-react";
 
-export default function SuccessPage() {
+function SuccessContent() {
     const searchParams = useSearchParams();
     const orderId = searchParams.get("id");
 
     // Pizza Morph Animation Variant
-    const pizzaVariants = {
+    const pizzaVariants: Variants = {
         initial: { scale: 0.8, opacity: 0, rotate: -180 },
         animate: {
             scale: 1,
@@ -27,7 +27,7 @@ export default function SuccessPage() {
     };
 
     return (
-        <div className="min-h-screen bg-metro/5 flex flex-col items-center justify-center p-6 text-center font-sans">
+        <div className="flex flex-col items-center justify-center text-center font-sans w-full">
             <motion.div
                 initial="initial"
                 animate="animate"
@@ -94,6 +94,16 @@ export default function SuccessPage() {
                     Track Order <ArrowRight size={20} />
                 </button>
             </motion.div>
+        </div>
+    );
+}
+
+export default function SuccessPage() {
+    return (
+        <div className="min-h-screen bg-metro/5 flex flex-col items-center justify-center p-6 bg-plate">
+            <Suspense fallback={<div className="text-center font-bold text-gray-500">Loading order details...</div>}>
+                <SuccessContent />
+            </Suspense>
         </div>
     );
 }
