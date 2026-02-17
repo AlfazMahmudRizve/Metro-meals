@@ -1,15 +1,44 @@
 "use client";
 
 import { Clock, MapPin, Truck, Utensils, ShoppingBag, Phone, Mail } from "lucide-react";
-import { getFormattedHours, isStoreOpen, SERVICES } from "@/lib/utils/businessHours";
+import { getFormattedHours, SERVICES } from "@/lib/utils/businessHours";
 import { useEffect, useState } from "react";
+import { createClient } from "@supabase/supabase-js";
 
 export default function InfoSection() {
     const hours = getFormattedHours();
     const [status, setStatus] = useState<{ isOpen: boolean, message: string } | null>(null);
 
+    const fetchStatus = async () => {
+        const { getStoreStatus } = await import("@/app/actions/storeStatus");
+        const data = await getStoreStatus();
+        setStatus(data);
+    };
+
     useEffect(() => {
-        setStatus(isStoreOpen());
+        // Initial Fetch
+        fetchStatus();
+
+        // Realtime Subscription
+        const supabase = createClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+        );
+
+        const channel = supabase
+            .channel("info_section_status_sync")
+            .on(
+                "postgres_changes",
+                { event: "UPDATE", schema: "public", table: "store_settings", filter: "id=eq.1" },
+                () => {
+                    fetchStatus();
+                }
+            )
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(channel);
+        };
     }, []);
 
     return (
