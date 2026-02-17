@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag, X } from "lucide-react";
 import { useCartStore } from "@/lib/store/cartStore";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 
@@ -14,6 +14,12 @@ export default function CartSheet() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState({ name: "", phone: "", tableNumber: "", address: "" });
     const router = useRouter();
+
+    // Hydration Fix
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const total = getCartTotal();
     const discountActive = isStudentDiscountActive();
@@ -62,7 +68,7 @@ export default function CartSheet() {
         }
     };
 
-    // if (cart.length === 0) return null; // User wants to see the bar to know gamification exists
+    if (!mounted) return null;
 
     return (
         <>
