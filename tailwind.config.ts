@@ -9,8 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        metro: "#E62129",
+        cheese: "#FFD200",
+        plate: "#FAFAFA",
+      },
+      fontFamily: {
+        sans: ["var(--font-inter)"],
+        heading: ["var(--font-nunito)"],
       },
     },
   },

@@ -1,0 +1,56 @@
+[
+    {
+        "id": "1",
+        "name": "Chicken Popcorn",
+        "price": 179,
+        "category": "Quick Bites",
+        "image": "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?q=80&w=2070&auto=format&fit=crop",
+        "tags": []
+    },
+    {
+        "id": "2",
+        "name": "Naga Fire Bites",
+        "price": 239,
+        "category": "Quick Bites",
+        "image": "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?q=80&w=2070&auto=format&fit=crop",
+        "tags": [
+            "spicy"
+        ]
+    },
+    {
+        "id": "3",
+        "name": "Bukhari Rice",
+        "price": 349,
+        "category": "Heavy Hitters",
+        "image": "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?q=80&w=2070&auto=format&fit=crop",
+        "tags": [
+            "bestseller"
+        ]
+    },
+    {
+        "id": "4",
+        "name": "Cream'son Pasta",
+        "price": 289,
+        "category": "Heavy Hitters",
+        "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1974&auto=format&fit=crop",
+        "tags": []
+    },
+    {
+        "id": "5",
+        "name": "Sizzling Chicken",
+        "price": 120,
+        "category": "Sides",
+        "image": "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?q=80&w=2070&auto=format&fit=crop",
+        "tags": []
+    },
+    {
+        "id": "6",
+        "name": "Big-Belly Cheesy Pasta",
+        "price": 399,
+        "category": "Heavy Hitters",
+        "image": "https://images.unsplash.com/photo-1626844131082-256783844137?q=80&w=1935&auto=format&fit=crop",
+        "tags": [
+            "bestseller"
+        ]
+    }
+]
