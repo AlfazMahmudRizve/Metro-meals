@@ -34,12 +34,12 @@ function SuccessContent() {
                 variants={pizzaVariants}
                 className="text-9xl mb-6 relative"
             >
-                🍕
+                ☕
                 <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ delay: 0.5, type: "spring" }}
-                    className="absolute -bottom-2 -right-2 bg-green-500 text-white rounded-full p-2 border-4 border-white"
+                    className="absolute -bottom-2 -right-2 bg-sage text-white rounded-full p-2 border-4 border-white"
                 >
                     <CheckCircle size={48} />
                 </motion.div>
@@ -49,18 +49,18 @@ function SuccessContent() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-4xl md:text-5xl font-extrabold font-heading text-gray-900 mb-4"
+                className="text-4xl md:text-5xl font-bold font-heading text-espresso mb-4"
             >
-                Order Placed!
+                Order Received!
             </motion.h1>
 
             <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
-                className="text-xl text-gray-600 max-w-md mx-auto mb-8"
+                className="text-xl text-espresso/70 max-w-md mx-auto mb-8 font-sans"
             >
-                High five! 🙌 The kitchen has received your order and the flames are on.
+                Wonderful choice! 🥯 The kitchen is preparing your meal with care.
             </motion.p>
 
             {orderId && (
@@ -68,12 +68,12 @@ function SuccessContent() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.6 }}
-                    className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 max-w-sm w-full mb-8"
+                    className="bg-white p-6 rounded-2xl shadow-sm border border-latte/20 max-w-sm w-full mb-8 font-sans"
                 >
                     <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Order ID</p>
-                    <p className="text-2xl font-mono font-bold text-gray-900">#{orderId.slice(0, 8)}</p>
-                    <div className="h-px bg-gray-100 my-4" />
-                    <p className="text-sm text-gray-500 font-medium">Estimated Time: <span className="text-metro font-bold">20-30 mins</span></p>
+                    <p className="text-2xl font-mono font-bold text-espresso">#{orderId.slice(0, 8)}</p>
+                    <div className="h-px bg-cream my-4" />
+                    <p className="text-sm text-espresso font-medium">Estimated Time: <span className="text-sage font-bold">20-30 mins</span></p>
                 </motion.div>
             )}
 
@@ -85,12 +85,12 @@ function SuccessContent() {
             >
                 <Link
                     href="/"
-                    className="flex items-center gap-2 px-6 py-3 bg-white text-gray-700 font-bold rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors shadow-sm"
+                    className="flex items-center gap-2 px-6 py-3 bg-white text-espresso font-bold rounded-xl border border-latte/20 hover:bg-cream transition-colors shadow-sm font-sans"
                 >
                     <Home size={20} /> Back Home
                 </Link>
                 {/* Future: Link to /status or /profile */}
-                <button className="flex items-center gap-2 px-6 py-3 bg-metro text-white font-bold rounded-xl hover:bg-red-700 transition-colors shadow-lg active:scale-95">
+                <button className="flex items-center gap-2 px-6 py-3 bg-espresso text-cream font-bold rounded-xl hover:bg-espresso/90 transition-colors shadow-lg active:scale-95 font-heading">
                     Track Order <ArrowRight size={20} />
                 </button>
             </motion.div>
@@ -100,7 +100,7 @@ function SuccessContent() {
 
 export default function SuccessPage() {
     return (
-        <div className="min-h-screen bg-metro/5 flex flex-col items-center justify-center p-6 bg-plate">
+        <div className="min-h-screen bg-cream flex flex-col items-center justify-center p-6">
             <Suspense fallback={<div className="text-center font-bold text-gray-500">Loading order details...</div>}>
                 <SuccessContent />
             </Suspense>

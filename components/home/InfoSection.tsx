@@ -20,23 +20,23 @@ export default function InfoSection() {
                     {/* Hours Column */}
                     <div>
                         <div className="flex items-center gap-3 mb-6">
-                            <Clock className="text-metro" size={32} />
-                            <h2 className="font-heading font-bold text-3xl text-gray-800">Opening Hours</h2>
+                            <Clock className="text-espresso" size={32} />
+                            <h2 className="font-heading font-bold text-3xl text-espresso">Cafe Hours</h2>
                         </div>
 
-                        <div className="bg-plate rounded-2xl p-6 shadow-sm border border-gray-200">
+                        <div className="bg-cream rounded-2xl p-6 shadow-sm border border-latte/20">
                             {/* Status Badge */}
-                            <div className={`mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold text-sm ${status?.isOpen ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+                            <div className={`mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold text-sm ${status?.isOpen ? "bg-sage/10 text-sage" : "bg-red-100 text-red-700"
                                 }`}>
-                                <div className={`w-2 h-2 rounded-full ${status?.isOpen ? "bg-green-600 animate-pulse" : "bg-red-600"}`} />
+                                <div className={`w-2 h-2 rounded-full ${status?.isOpen ? "bg-sage animate-pulse" : "bg-red-600"}`} />
                                 {status?.message}
                             </div>
 
                             <ul className="space-y-3">
                                 {hours.map((h, i) => (
-                                    <li key={i} className="flex justify-between items-center text-gray-700 border-b border-gray-200/50 pb-2 last:border-0 last:pb-0">
+                                    <li key={i} className="flex justify-between items-center text-espresso/80 border-b border-latte/10 pb-2 last:border-0 last:pb-0 font-sans">
                                         <span className="font-bold">{h.day}</span>
-                                        <span className="font-mono text-sm">{h.time}</span>
+                                        <span className="font-bold text-sm">{h.time}</span>
                                     </li>
                                 ))}
                             </ul>
@@ -47,48 +47,48 @@ export default function InfoSection() {
                     {/* Services Column */}
                     <div>
                         <div className="flex items-center gap-3 mb-6">
-                            <Utensils className="text-cheese" size={32} />
-                            <h2 className="font-heading font-bold text-3xl text-gray-800">Services</h2>
+                            <Utensils className="text-latte" size={32} />
+                            <h2 className="font-heading font-bold text-3xl text-espresso">Services</h2>
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
                             {SERVICES.map((service) => (
-                                <div key={service} className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:border-cheese/50 transition-colors group">
-                                    <div className="p-2 bg-gray-50 rounded-lg group-hover:bg-cheese/20 transition-colors">
-                                        {service === "Delivery" && <Truck size={20} className="text-metro" />}
-                                        {service === "Takeout" && <ShoppingBag size={20} className="text-metro" />}
-                                        {service === "Dine-in" && <Utensils size={20} className="text-metro" />}
-                                        {service === "In-store pickup" && <MapPin size={20} className="text-metro" />}
+                                <div key={service} className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm border border-latte/20 hover:border-latte transition-colors group">
+                                    <div className="p-2 bg-cream rounded-lg group-hover:bg-latte/20 transition-colors">
+                                        {service === "Delivery" && <Truck size={20} className="text-espresso" />}
+                                        {service === "Takeout" && <ShoppingBag size={20} className="text-espresso" />}
+                                        {service === "Dine-in" && <Utensils size={20} className="text-espresso" />}
+                                        {service === "In-store pickup" && <MapPin size={20} className="text-espresso" />}
                                     </div>
-                                    <span className="font-bold text-gray-700">{service}</span>
+                                    <span className="font-bold text-espresso">{service}</span>
                                 </div>
                             ))}
                         </div>
                     </div>
 
                     {/* Contact Column */}
-                    <div className="md:col-span-2 mt-8 border-t border-gray-200 pt-8">
+                    <div className="md:col-span-2 mt-8 border-t border-latte/20 pt-8">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
                             <div className="flex flex-col items-center md:items-start">
-                                <MapPin className="text-metro mb-2" size={24} />
-                                <h3 className="font-bold text-gray-900">Visit Us</h3>
-                                <p className="text-gray-600 text-sm mt-1">
-                                    Next to Shwapno, Cosmopolitan, 2 No Gate<br />
-                                    Bayezid Bostami Road, Chittagong, Bangladesh, 4209
+                                <MapPin className="text-espresso mb-2" size={24} />
+                                <h3 className="font-bold text-espresso">Visit Us</h3>
+                                <p className="text-espresso/70 text-sm mt-1 font-sans">
+                                    House 123, Road 4, Block B<br />
+                                    Banani, Dhaka, Bangladesh
                                 </p>
                             </div>
                             <div className="flex flex-col items-center md:items-start">
-                                <Phone className="text-cheese mb-2" size={24} />
-                                <h3 className="font-bold text-gray-900">Call Us</h3>
-                                <p className="text-gray-600 text-sm mt-1">
-                                    <a href="tel:+8801841942805" className="hover:text-metro transition-colors">01841-942805</a>
+                                <Phone className="text-latte mb-2" size={24} />
+                                <h3 className="font-bold text-espresso">Call Us</h3>
+                                <p className="text-espresso/70 text-sm mt-1 font-sans">
+                                    <a href="tel:+8801234567890" className="hover:text-sage transition-colors">+880 1234-567890</a>
                                 </p>
                             </div>
                             <div className="flex flex-col items-center md:items-start">
-                                <Mail className="text-metro mb-2" size={24} />
-                                <h3 className="font-bold text-gray-900">Email Us</h3>
-                                <p className="text-gray-600 text-sm mt-1">
-                                    <a href="mailto:metromeals.operation@gmail.com" className="hover:text-metro transition-colors">metromeals.operation@gmail.com</a>
+                                <Mail className="text-espresso mb-2" size={24} />
+                                <h3 className="font-bold text-espresso">Email Us</h3>
+                                <p className="text-espresso/70 text-sm mt-1 font-sans">
+                                    <a href="mailto:urbanharvest.cafe@gmail.com" className="hover:text-sage transition-colors">urbanharvest.cafe@gmail.com</a>
                                 </p>
                             </div>
                         </div>

@@ -36,28 +36,28 @@ export default function CustomerLogin() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-plate p-4">
-            <div className="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-sm border border-gray-100 transition-all">
+        <div className="min-h-screen flex items-center justify-center bg-cream p-4">
+            <div className="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-sm border border-latte/20 transition-all font-sans">
                 <div className="text-center mb-6">
-                    <h1 className="font-heading font-extrabold text-3xl text-gray-900">
-                        {isLogin ? "Welcome Back! 👋" : "Join the Club 🚀"}
+                    <h1 className="font-heading font-bold text-3xl text-espresso">
+                        {isLogin ? "Welcome Back! ☕" : "Join the Family 🥐"}
                     </h1>
-                    <p className="text-gray-500 mt-2 text-sm">
-                        {isLogin ? "Login to access your loyalty perks" : "Register to start earning rewards"}
+                    <p className="text-espresso/60 mt-2 text-sm">
+                        {isLogin ? "Login to access your cafe rewards" : "Register to start earning points"}
                     </p>
                 </div>
 
                 {/* Toggle */}
-                <div className="flex bg-gray-100 p-1 rounded-xl mb-6">
+                <div className="flex bg-cream p-1 rounded-xl mb-6 border border-latte/10">
                     <button
                         onClick={() => setIsLogin(true)}
-                        className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${isLogin ? "bg-white shadow-sm text-black" : "text-gray-500 hover:text-gray-700"}`}
+                        className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${isLogin ? "bg-white shadow-sm text-espresso" : "text-espresso/50 hover:text-espresso"}`}
                     >
                         Login
                     </button>
                     <button
                         onClick={() => setIsLogin(false)}
-                        className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${!isLogin ? "bg-white shadow-sm text-black" : "text-gray-500 hover:text-gray-700"}`}
+                        className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${!isLogin ? "bg-white shadow-sm text-espresso" : "text-espresso/50 hover:text-espresso"}`}
                     >
                         Register
                     </button>
@@ -66,48 +66,48 @@ export default function CustomerLogin() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                     {!isLogin && (
                         <div>
-                            <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Full Name</label>
+                            <label className="block text-xs font-bold text-espresso/50 uppercase mb-1">Full Name</label>
                             <input
                                 name="name"
                                 type="text"
                                 required
-                                className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-metro font-medium"
+                                className="w-full p-3 bg-cream rounded-xl border border-latte/20 outline-none focus:ring-2 focus:ring-espresso font-medium text-espresso"
                                 placeholder="John Doe"
                             />
                         </div>
                     )}
 
                     <div>
-                        <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Mobile Number</label>
+                        <label className="block text-xs font-bold text-espresso/50 uppercase mb-1">Mobile Number</label>
                         <input
                             name="phone"
                             type="tel"
                             required
-                            className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-metro font-medium"
+                            className="w-full p-3 bg-cream rounded-xl border border-latte/20 outline-none focus:ring-2 focus:ring-espresso font-medium text-espresso"
                             placeholder="01712345678"
                         />
                     </div>
 
                     {!isLogin && (
                         <div>
-                            <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Address</label>
+                            <label className="block text-xs font-bold text-espresso/50 uppercase mb-1">Address</label>
                             <textarea
                                 name="address"
                                 required
                                 rows={2}
-                                className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-metro font-medium"
+                                className="w-full p-3 bg-cream rounded-xl border border-latte/20 outline-none focus:ring-2 focus:ring-espresso font-medium text-espresso"
                                 placeholder="House 10, Road 5..."
                             />
                         </div>
                     )}
 
                     <div>
-                        <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Password</label>
+                        <label className="block text-xs font-bold text-espresso/50 uppercase mb-1">Password</label>
                         <input
                             name="password"
                             type="password"
                             required
-                            className="w-full p-3 bg-gray-50 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-metro font-bold"
+                            className="w-full p-3 bg-cream rounded-xl border border-latte/20 outline-none focus:ring-2 focus:ring-espresso font-bold text-espresso"
                             placeholder="••••••••"
                         />
                     </div>
@@ -117,7 +117,7 @@ export default function CustomerLogin() {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full bg-metro text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl hover:bg-red-700 transition-all active:scale-95 flex justify-center items-center gap-2"
+                        className="w-full bg-espresso text-cream font-bold py-4 rounded-xl shadow-lg hover:shadow-xl hover:bg-espresso/90 transition-all active:scale-95 flex justify-center items-center gap-2 font-heading tracking-wide"
                     >
                         {isLoading ? <Loader2 className="animate-spin" /> : (
                             isLogin ? <>Login <LogIn size={20} /></> : <>Create Account <UserPlus size={20} /></>

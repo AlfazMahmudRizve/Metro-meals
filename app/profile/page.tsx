@@ -53,17 +53,17 @@ export default function ProfilePage() {
         router.push("/");
     }
 
-    if (loading) return <div className="min-h-screen flex items-center justify-center">Loading Profile...</div>;
+    if (loading) return <div className="min-h-screen flex items-center justify-center font-sans">Loading Profile...</div>;
 
     return (
-        <div className="min-h-screen bg-gray-50 pb-20 font-sans">
-            <div className="bg-metro text-white pb-20 pt-8 px-6">
+        <div className="min-h-screen bg-cream pb-20 font-sans">
+            <div className="bg-espresso text-cream pb-20 pt-8 px-6">
                 <div className="max-w-4xl mx-auto flex justify-between items-start">
                     <div>
-                        <h1 className="text-3xl font-extrabold font-heading">My Profile</h1>
-                        <p className="opacity-80">Welcome back, {customer?.name}!</p>
+                        <h1 className="text-3xl font-bold font-heading">My Profile</h1>
+                        <p className="opacity-80 font-sans">Welcome back, {customer?.name}!</p>
                     </div>
-                    <button onClick={handleLogout} className="bg-white/10 hover:bg-white/20 p-2 rounded-full backdrop-blur-sm">
+                    <button onClick={handleLogout} className="bg-white/10 hover:bg-white/20 p-2 rounded-full backdrop-blur-sm transition-colors">
                         <LogOut size={20} />
                     </button>
                 </div>
@@ -71,24 +71,24 @@ export default function ProfilePage() {
 
             <div className="max-w-4xl mx-auto px-6 -mt-12 space-y-8">
                 {/* Stats */}
-                <div className="bg-white rounded-2xl shadow-lg p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-white rounded-2xl shadow-lg p-6 grid grid-cols-1 md:grid-cols-3 gap-6 border border-latte/10">
                     <div className="flex items-center gap-4">
-                        <div className="bg-red-50 p-4 rounded-full text-metro">
+                        <div className="bg-latte/20 p-4 rounded-full text-espresso">
                             <User size={24} />
                         </div>
                         <div>
                             <p className="text-xs text-gray-500 font-bold uppercase">Customer Info</p>
-                            <p className="font-bold text-gray-900">{customer?.phone}</p>
+                            <p className="font-bold text-espresso">{customer?.phone}</p>
                             <p className="text-xs text-gray-400 truncate w-32">{customer?.address}</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
-                        <div className="bg-green-50 p-4 rounded-full text-green-600">
+                        <div className="bg-sage/20 p-4 rounded-full text-sage">
                             <ShoppingBag size={24} />
                         </div>
                         <div>
                             <p className="text-xs text-gray-500 font-bold uppercase">Total Spend</p>
-                            <p className="font-bold text-2xl text-gray-900">৳{customer?.total_spend}</p>
+                            <p className="font-bold text-2xl text-espresso">৳{customer?.total_spend}</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
@@ -97,20 +97,20 @@ export default function ProfilePage() {
                         </div>
                         <div>
                             <p className="text-xs text-gray-500 font-bold uppercase">Total Visits</p>
-                            <p className="font-bold text-2xl text-gray-900">{customer?.visit_count}</p>
+                            <p className="font-bold text-2xl text-espresso">{customer?.visit_count}</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Order History */}
                 <div>
-                    <h2 className="text-xl font-bold text-gray-900 mb-4">Order History</h2>
+                    <h2 className="text-xl font-bold text-espresso mb-4 font-heading">Order History</h2>
                     <div className="space-y-4">
                         {orders.map((order) => (
-                            <div key={order.id} className="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row justify-between md:items-center gap-4">
+                            <div key={order.id} className="bg-white p-5 rounded-xl shadow-sm border border-latte/10 flex flex-col md:flex-row justify-between md:items-center gap-4">
                                 <div>
                                     <div className="flex items-center gap-2 mb-1">
-                                        <span className={`text-xs font-bold px-2 py-0.5 rounded uppercase ${order.status === 'completed' ? 'bg-green-100 text-green-700' :
+                                        <span className={`text-xs font-bold px-2 py-0.5 rounded uppercase ${order.status === 'completed' ? 'bg-sage/10 text-sage' :
                                             order.status === 'cancelled' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
                                             }`}>
                                             {order.status}
@@ -125,8 +125,8 @@ export default function ProfilePage() {
                                     </div>
                                 </div>
                                 <div className="text-right">
-                                    <div className="text-xl font-extrabold text-gray-900">৳{order.total_amount}</div>
-                                    <button onClick={() => router.push(`/success?id=${order.id}`)} className="text-xs font-bold text-metro hover:underline mt-1">
+                                    <div className="text-xl font-bold text-espresso">৳{order.total_amount}</div>
+                                    <button onClick={() => router.push(`/success?id=${order.id}`)} className="text-xs font-bold text-sage hover:underline mt-1 font-sans">
                                         View Receipt
                                     </button>
                                 </div>

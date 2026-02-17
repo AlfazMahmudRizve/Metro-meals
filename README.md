@@ -1,8 +1,11 @@
-# Metro Meals 🍔🍕
+# Urban Harvest Cafe ☕🥯
+<br />
 
-> **Cheesy. Spicy. Ready in 15 mins.**
+> **Fresh. Artisan. Served with Love.**
 
-Metro Meals is a modern, high-performance food ordering application built for speed and cravings. It features a gamified cart system, real-time business logic, and a "flavor-first" design philosophy.
+![Banner](https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=2047&auto=format&fit=crop)
+
+Urban Harvest Cafe is a modern, artisan food ordering application built for warmth and cravings. It features a seamless serving tray system, real-time kitchen logic, and a "fresh-first" design philosophy.
 
 ## 🚀 Features
 
@@ -32,6 +35,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## 👤 Author
 
 Designed & Developed by **[Alfaz Mahmud Rizve](https://whoisalfaz.me)**.
+[View Source on GitHub](https://github.com/AlfazMahmudRizve/Urban-Harvest-Cafe)
 
 ---
 *Built with ❤️ for foodies.*

@@ -72,7 +72,7 @@ export const useCartStore = create<CartState>()(
             },
         }),
         {
-            name: 'metro-meals-cart',
+            name: 'urban-harvest-cart',
             storage: createJSONStorage(() => localStorage),
             skipHydration: false,
         }

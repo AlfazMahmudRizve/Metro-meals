@@ -43,7 +43,7 @@ export function RevenueChart({ orders }: { orders: any[] }) {
             {
                 label: 'Revenue (৳)',
                 data: revenueData,
-                backgroundColor: 'rgba(230, 33, 41, 0.8)', // Metro Red
+                backgroundColor: 'rgba(74, 59, 50, 0.8)', // Espresso
                 borderRadius: 4,
             },
         ],
@@ -93,11 +93,11 @@ export function CategoryPieChart({ orders }: { orders: any[] }) {
             {
                 data: topItems.map(([, count]) => count),
                 backgroundColor: [
-                    '#FF6384',
-                    '#36A2EB',
-                    '#FFCE56',
-                    '#4BC0C0',
-                    '#9966FF',
+                    '#4A3B32', // Espresso
+                    '#DDbea9', // Latte
+                    '#6B9080', // Sage
+                    '#A4AC86', // Light Sage
+                    '#C2B280', // Sand
                 ],
             },
         ],

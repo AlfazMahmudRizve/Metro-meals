@@ -4,6 +4,6 @@
 
 @layer base {
   body {
-    @apply bg-plate text-gray-900 antialiased;
+    @apply bg-cream text-espresso antialiased;
   }
 }

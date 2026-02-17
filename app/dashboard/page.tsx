@@ -132,7 +132,7 @@ export default function AdminDashboard() {
             <header className="flex justify-between items-center">
                 <div>
                     <h1 className="text-4xl font-extrabold font-heading text-gray-900 tracking-tight">Kitchen Command Center</h1>
-                    <p className="text-gray-500 font-medium mt-1">running on Metro OS ⚡</p>
+                    <p className="text-espresso/60 font-medium mt-1">running on Harvest OS 🌿</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <a
