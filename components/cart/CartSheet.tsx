@@ -40,15 +40,23 @@ export default function CartSheet() {
 
 
 
+    const [error, setError] = useState("");
+
+    // Reset error when sheet opens/closes or checkout form toggles
+    useEffect(() => {
+        if (!isOpen || !showCheckoutForm) setError("");
+    }, [isOpen, showCheckoutForm]);
+
     const handleCheckout = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError("");
 
         // Server-side check
         const { getStoreStatus } = await import("@/app/actions/storeStatus");
         const status = await getStoreStatus();
 
         if (!status.isOpen) {
-            alert(status.message);
+            setError(status.message);
             return;
         }
 
@@ -70,11 +78,11 @@ export default function CartSheet() {
                 setShowCheckoutForm(false);
                 router.push(`/success?id=${result.orderId}`);
             } else {
-                alert("Failed to place order: " + (result.error || "Unknown error"));
+                setError("Failed to place order: " + (result.error || "Unknown error"));
             }
         } catch (error) {
             console.error("Checkout failed", error);
-            alert("An unexpected error occurred.");
+            setError("An unexpected error occurred. Please try again.");
         } finally {
             setIsSubmitting(false);
         }
@@ -224,6 +232,11 @@ export default function CartSheet() {
                             <div className="p-6 bg-white border-t border-latte/20">
                                 {!showCheckoutForm ? (
                                     <>
+                                        {error && (
+                                            <div className="bg-red-50 text-red-600 text-sm font-bold p-3 rounded-xl mb-4 text-center border border-red-100 animate-in fade-in slide-in-from-top-2">
+                                                {error}
+                                            </div>
+                                        )}
                                         <div className="flex justify-between mb-4 text-lg text-espresso">
                                             <span>Total</span>
                                             <span className="font-bold">৳{total}</span>
@@ -242,22 +255,29 @@ export default function CartSheet() {
                                         </button>
                                     </>
                                 ) : (
-                                    <div className="flex gap-3">
-                                        <button
-                                            type="button"
-                                            onClick={() => setShowCheckoutForm(false)}
-                                            className="flex-1 bg-gray-100 text-espresso py-3 rounded-xl font-bold hover:bg-gray-200 transition-colors"
-                                        >
-                                            Back
-                                        </button>
-                                        <button
-                                            form="checkout-form"
-                                            type="submit"
-                                            disabled={isSubmitting}
-                                            className="flex-1 bg-espresso text-cream py-3 rounded-xl font-bold shadow-lg disabled:opacity-50 hover:bg-espresso/90 transition-colors"
-                                        >
-                                            {isSubmitting ? "Placing Order..." : `Confirm ৳${finalTotal}`}
-                                        </button>
+                                    <div className="flex flex-col gap-3">
+                                        {error && (
+                                            <div className="bg-red-50 text-red-600 text-sm font-bold p-3 rounded-xl text-center border border-red-100 animate-in fade-in slide-in-from-top-2">
+                                                {error}
+                                            </div>
+                                        )}
+                                        <div className="flex gap-3">
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowCheckoutForm(false)}
+                                                className="flex-1 bg-gray-100 text-espresso py-3 rounded-xl font-bold hover:bg-gray-200 transition-colors"
+                                            >
+                                                Back
+                                            </button>
+                                            <button
+                                                form="checkout-form"
+                                                type="submit"
+                                                disabled={isSubmitting}
+                                                className="flex-1 bg-espresso text-cream py-3 rounded-xl font-bold shadow-lg disabled:opacity-50 hover:bg-espresso/90 transition-colors"
+                                            >
+                                                {isSubmitting ? "Placing Order..." : `Confirm ৳${finalTotal}`}
+                                            </button>
+                                        </div>
                                     </div>
                                 )}
                             </div>

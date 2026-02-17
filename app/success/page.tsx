@@ -90,9 +90,12 @@ function SuccessContent() {
                     <Home size={20} /> Back Home
                 </Link>
                 {/* Future: Link to /status or /profile */}
-                <button className="flex items-center gap-2 px-6 py-3 bg-espresso text-cream font-bold rounded-xl hover:bg-espresso/90 transition-colors shadow-lg active:scale-95 font-heading">
+                <Link
+                    href="/profile"
+                    className="flex items-center gap-2 px-6 py-3 bg-espresso text-cream font-bold rounded-xl hover:bg-espresso/90 transition-colors shadow-lg active:scale-95 font-heading"
+                >
                     Track Order <ArrowRight size={20} />
-                </button>
+                </Link>
             </motion.div>
         </div>
     );
