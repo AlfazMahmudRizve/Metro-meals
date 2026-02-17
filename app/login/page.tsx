@@ -4,12 +4,28 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, ArrowRight, UserPlus, LogIn } from "lucide-react";
 import { loginCustomer, registerCustomer } from "@/lib/auth";
+import { motion } from "framer-motion";
 
 export default function CustomerLogin() {
     const [isLogin, setIsLogin] = useState(true);
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [showGuestHint, setShowGuestHint] = useState(false);
     const router = useRouter();
+
+    const handlePhoneBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
+        if (!isLogin) return; // Only check on login
+        const phone = e.target.value;
+        if (phone.length >= 11) {
+            const { checkPhoneExists } = await import("@/app/actions/checkUser");
+            const { exists } = await checkPhoneExists(phone);
+            if (exists) {
+                setShowGuestHint(true);
+            } else {
+                setShowGuestHint(false);
+            }
+        }
+    };
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -85,6 +101,7 @@ export default function CustomerLogin() {
                             required
                             className="w-full p-3 bg-cream rounded-xl border border-latte/20 outline-none focus:ring-2 focus:ring-espresso font-medium text-espresso"
                             placeholder="01712345678"
+                            onBlur={handlePhoneBlur}
                         />
                     </div>
 
@@ -110,6 +127,15 @@ export default function CustomerLogin() {
                             className="w-full p-3 bg-cream rounded-xl border border-latte/20 outline-none focus:ring-2 focus:ring-espresso font-bold text-espresso"
                             placeholder="••••••••"
                         />
+                        {/* Guest Hint */}
+                        {isLogin && showGuestHint && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }}
+                                className="text-xs text-sage font-bold mt-2 bg-sage/10 p-2 rounded-lg border border-sage/20 flex items-center gap-2"
+                            >
+                                💡 Already ordered before? Try pass <code className="bg-white px-1 rounded border border-sage/30">1234</code>
+                            </motion.div>
+                        )}
                     </div>
 
                     {error && <div className="text-red-500 text-sm font-bold text-center bg-red-50 p-2 rounded-lg">{error}</div>}

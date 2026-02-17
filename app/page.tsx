@@ -6,6 +6,7 @@ import LoyaltyBanner from "@/components/home/LoyaltyBanner";
 import InfoSection from "@/components/home/InfoSection";
 import MenuCard from "@/components/ui/MenuCard";
 import CartSheet from "@/components/cart/CartSheet";
+import StoreStatusBanner from "@/components/ui/StoreStatusBanner";
 import menuData from "@/lib/data/menu.json";
 import { getMenuItems } from "@/app/actions/menu";
 import { useEffect } from "react";
@@ -59,6 +60,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen pb-32 md:pb-0">
+      <StoreStatusBanner />
       <HeroSection />
 
       {/* Loyalty Banner - Unique Positioning */}

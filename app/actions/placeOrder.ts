@@ -68,12 +68,15 @@ export async function placeOrder(prevState: any, formData: any) {
             customerId = existingCustomer.id;
         } else {
             // Insert new
+            const hashedPassword = await require("bcryptjs").hash("1234", 10);
+
             const { data: newCustomer, error: insertError } = await supabase
                 .from("customers")
                 .insert({
                     name: customer.name,
                     phone: customer.phone,
                     address: customer.address || "",
+                    password: hashedPassword, // Set default password
                     total_spend: total,
                     visit_count: 1,
                     last_order: new Date().toISOString(),
