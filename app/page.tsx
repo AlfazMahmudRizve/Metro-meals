@@ -7,6 +7,8 @@ import InfoSection from "@/components/home/InfoSection";
 import MenuCard from "@/components/ui/MenuCard";
 import CartSheet from "@/components/cart/CartSheet";
 import menuData from "@/lib/data/menu.json";
+import { getMenuItems } from "@/app/actions/menu";
+import { useEffect } from "react";
 
 // Typed Menu Item
 type MenuItem = {
@@ -20,16 +22,32 @@ type MenuItem = {
 
 export default function Home() {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const categories = ["All", ...Array.from(new Set(menuData.map((item) => item.category)))];
+  useEffect(() => {
+    async function fetchMenu() {
+      try {
+        const items: any = await getMenuItems();
+        // Filter out unavailable items if you want, or show them as sold out?
+        // For now, let's show only available ones on the homepage
+        setMenuItems(items.filter((i: any) => i.available !== false));
+      } catch (e) {
+        console.error("Failed to fetch menu", e);
+        // Fallback to static data if DB fails or empty?
+        setMenuItems(menuData as any);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchMenu();
+  }, []);
+
+  const categories = ["All", ...Array.from(new Set(menuItems.map((item) => item.category)))];
 
   const filteredMenu = activeCategory === "All"
-    ? menuData
-    : menuData.filter((item) => item.category === activeCategory);
-
-  // Group by category for the display if "All" is selected, or just list them? 
-  // User req: "Sticky Category Nav: Rice Meals | Pizza... Behavior: Clicking Pizza smooth-scrolls"
-  // Implementing scroll-to architecture is better.
+    ? menuItems
+    : menuItems.filter((item) => item.category === activeCategory);
 
   const scrollToCategory = (cat: string) => {
     const element = document.getElementById(cat);

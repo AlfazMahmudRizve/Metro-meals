@@ -133,9 +133,17 @@ export default function AdminDashboard() {
                     <h1 className="text-4xl font-extrabold font-heading text-gray-900 tracking-tight">Kitchen Command Center</h1>
                     <p className="text-gray-500 font-medium mt-1">running on Metro OS ⚡</p>
                 </div>
-                <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-full shadow-sm border">
-                    <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
-                    <span className="text-sm font-bold text-gray-700">Live Socket Connected</span>
+                <div className="flex items-center gap-3">
+                    <a
+                        href="/dashboard/menu"
+                        className="bg-white hover:bg-gray-50 text-gray-700 font-bold px-4 py-2 rounded-xl border border-gray-200 shadow-sm transition-all active:scale-95 flex items-center gap-2"
+                    >
+                        <Utensils size={18} /> Manage Menu
+                    </a>
+                    <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-full shadow-sm border">
+                        <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
+                        <span className="text-sm font-bold text-gray-700">Live Socket Connected</span>
+                    </div>
                 </div>
             </header>
 

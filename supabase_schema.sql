@@ -5,6 +5,7 @@ create table if not exists customers (
   name text not null,
   phone text unique not null,
   address text,
+  password text, -- Added for Auth
   total_spend numeric default 0,
   visit_count integer default 0,
   last_order timestamp with time zone
@@ -23,14 +24,24 @@ create table if not exists orders (
   order_type text -- delivery or dine-in
 );
 
+-- Create Menu Items Table
+create table if not exists menu_items (
+  id uuid default gen_random_uuid() primary key,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  name text not null,
+  price numeric not null,
+  category text not null,
+  image text,
+  tags text[] default '{}',
+  available boolean default true
+);
+
 -- Enable Row Level Security (RLS)
 alter table customers enable row level security;
 alter table orders enable row level security;
+alter table menu_items enable row level security;
 
 -- Policies (Adjust based on your Auth setup)
--- For now, allowing public read/write for demo purposes (NOT RECOMMENDED FOR PRODUCTION)
--- Ideally, use Service Role for server-side operations and authenticated users for client-side.
-
 create policy "Enable read access for all users" on customers for select using (true);
 create policy "Enable insert for all users" on customers for insert with check (true);
 create policy "Enable update for all users" on customers for update using (true);
@@ -39,5 +50,11 @@ create policy "Enable read access for all users" on orders for select using (tru
 create policy "Enable insert for all users" on orders for insert with check (true);
 create policy "Enable update for all users" on orders for update using (true);
 
+create policy "Enable read access for all users" on menu_items for select using (true);
+create policy "Enable admin insert" on menu_items for insert with check (true);
+create policy "Enable admin update" on menu_items for update using (true);
+create policy "Enable admin delete" on menu_items for delete using (true);
+
 -- Enable Realtime
 alter publication supabase_realtime add table orders;
+alter publication supabase_realtime add table menu_items;
