@@ -253,7 +253,7 @@ export default function AdminDashboard() {
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                     <div className="flex items-center gap-2 mb-6">
                         <Users className="text-purple-600" />
-                        <h2 className="text-xl font-bold font-heading">The "Whale" List 🐋</h2>
+                        <h2 className="text-xl font-bold font-heading">The &quot;Whale&quot; List 🐋</h2>
                     </div>
                     <div className="overflow-x-auto">
                         <table className="w-full">

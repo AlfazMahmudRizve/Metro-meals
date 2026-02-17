@@ -46,7 +46,7 @@ export default function ProfilePage() {
             setLoading(false);
         }
         loadData();
-    }, []);
+    }, [router]);
 
     async function handleLogout() {
         await logoutCustomer();
@@ -111,7 +111,7 @@ export default function ProfilePage() {
                                 <div>
                                     <div className="flex items-center gap-2 mb-1">
                                         <span className={`text-xs font-bold px-2 py-0.5 rounded uppercase ${order.status === 'completed' ? 'bg-green-100 text-green-700' :
-                                                order.status === 'cancelled' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
+                                            order.status === 'cancelled' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
                                             }`}>
                                             {order.status}
                                         </span>
