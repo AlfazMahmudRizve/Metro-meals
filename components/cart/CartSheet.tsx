@@ -38,19 +38,19 @@ export default function CartSheet() {
     const remaining = Math.max(0, threshold - total);
     const progress = Math.min(100, (total / threshold) * 100);
 
-    const isStoreOpenCheck = () => {
-        const { isOpen, message } = require("@/lib/utils/businessHours").isStoreOpen();
-        if (!isOpen) {
-            alert(`Store is currently closed. ${message}`);
-            return false;
-        }
-        return true;
-    };
+
 
     const handleCheckout = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!isStoreOpenCheck()) return;
+        // Server-side check
+        const { getStoreStatus } = await import("@/app/actions/storeStatus");
+        const status = await getStoreStatus();
+
+        if (!status.isOpen) {
+            alert(status.message);
+            return;
+        }
 
         setIsSubmitting(true);
 

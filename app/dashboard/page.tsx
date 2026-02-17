@@ -66,9 +66,16 @@ export default function AdminDashboard() {
         .sort(([, a]: any, [, b]: any) => b - a)
         .slice(0, 5);
 
+    const [storeStatus, setStoreStatus] = useState<{ isOpen: boolean, message: string, isManual: boolean, expiresAt?: string } | null>(null);
+
     // Initial Fetch
     useEffect(() => {
         const fetchData = async () => {
+            // Fetch Store Status
+            const { getStoreStatus } = await import("@/app/actions/storeStatus");
+            const status = await getStoreStatus();
+            setStoreStatus(status);
+
             // Fetch Orders with Customer Data
             const { data: ordersData } = await supabase
                 .from("orders")
@@ -123,6 +130,19 @@ export default function AdminDashboard() {
         await updateOrderStatus(id, status);
     };
 
+    const handleToggleStore = async () => {
+        if (!storeStatus) return;
+        const { toggleStoreStatus, getStoreStatus } = await import("@/app/actions/storeStatus");
+
+        // Optimistic UI
+        const newStatus = !storeStatus.isOpen;
+        setStoreStatus(prev => prev ? { ...prev, isOpen: newStatus, isManual: true } : null);
+
+        await toggleStoreStatus(newStatus ? "OPEN" : "CLOSED");
+        const updated = await getStoreStatus();
+        setStoreStatus(updated);
+    };
+
     const pendingOrders = orders.filter(o => o.status === "pending");
     const cookingOrders = orders.filter(o => o.status === "cooking");
     const completedOrders = orders.filter(o => o.status === "completed").slice(0, 10); // Show last 10 completed
@@ -135,6 +155,25 @@ export default function AdminDashboard() {
                     <p className="text-espresso/60 font-medium mt-1">running on Harvest OS 🌿</p>
                 </div>
                 <div className="flex items-center gap-3">
+                    {/* Store Toggle */}
+                    {storeStatus && (
+                        <button
+                            onClick={handleToggleStore}
+                            className={`flex items-center gap-2 px-4 py-2 rounded-full font-bold transition-all shadow-sm border active:scale-95 ${storeStatus.isOpen
+                                    ? "bg-green-100 text-green-700 border-green-200 hover:bg-green-200"
+                                    : "bg-red-100 text-red-700 border-red-200 hover:bg-red-200"
+                                }`}
+                        >
+                            <div className={`w-3 h-3 rounded-full ${storeStatus.isOpen ? "bg-green-500 animate-pulse" : "bg-red-500"}`} />
+                            {storeStatus.isOpen ? "Store Open" : "Store Closed"}
+                            {storeStatus.isManual && (
+                                <span className="text-[10px] bg-white/50 px-1.5 py-0.5 rounded ml-1 border border-black/5">
+                                    MANUAL
+                                </span>
+                            )}
+                        </button>
+                    )}
+
                     <a
                         href="/dashboard/menu"
                         className="bg-white hover:bg-gray-50 text-gray-700 font-bold px-4 py-2 rounded-xl border border-gray-200 shadow-sm transition-all active:scale-95 flex items-center gap-2"
