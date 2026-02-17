@@ -36,9 +36,13 @@ export default function CustomerLogin() {
         const action = isLogin ? loginCustomer : registerCustomer;
 
         try {
-            const result = await action(formData);
+            const result: { success: boolean; error?: string; redirect?: string } = await action(formData);
             if (result.success) {
-                router.push("/");
+                if (result.redirect) {
+                    router.push(result.redirect);
+                } else {
+                    router.push("/");
+                }
                 router.refresh();
             } else {
                 setError(result.error || "Authentication failed");

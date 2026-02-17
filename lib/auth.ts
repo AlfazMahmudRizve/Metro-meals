@@ -146,10 +146,15 @@ export async function loginCustomer(formData: FormData) {
             phone: customer.phone,
             name: customer.name,
             role: "customer",
+            requiresPasswordChange: password === "1234",
             expires
         });
 
         cookies().set("customer_session", session, { expires, httpOnly: true });
+
+        if (password === "1234") {
+            return { success: true, redirect: "/profile" };
+        }
 
         return { success: true };
 
@@ -167,4 +172,33 @@ export async function getCustomerSession() {
 
 export async function logoutCustomer() {
     cookies().set("customer_session", "", { expires: new Date(0) });
+}
+
+export async function updateCustomerPassword(newPassword: string) {
+    const session = await getCustomerSession();
+    if (!session) return { success: false, error: "Not authenticated" };
+
+    try {
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        const { error } = await supabase
+            .from("customers")
+            .update({ password: hashedPassword })
+            .eq("id", session.id);
+
+        if (error) throw error;
+
+        // Refresh session to clear flag
+        const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+        const newSession = await encrypt({
+            ...session,
+            requiresPasswordChange: false,
+            expires
+        });
+        cookies().set("customer_session", newSession, { expires, httpOnly: true });
+
+        return { success: true };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
 }

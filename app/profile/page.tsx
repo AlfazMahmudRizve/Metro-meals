@@ -18,12 +18,20 @@ export default function ProfilePage() {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
+    const [showPasswordReset, setShowPasswordReset] = useState(false);
+    const [passwordError, setPasswordError] = useState("");
+    const [updatingPassword, setUpdatingPassword] = useState(false);
+
     useEffect(() => {
         async function loadData() {
             const session = await getCustomerSession();
             if (!session) {
                 router.push("/login");
                 return;
+            }
+
+            if (session.requiresPasswordChange) {
+                setShowPasswordReset(true);
             }
 
             // Fetch fresh customer data
@@ -51,6 +59,32 @@ export default function ProfilePage() {
     async function handleLogout() {
         await logoutCustomer();
         router.push("/");
+    }
+
+    async function handlePasswordUpdate(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        setUpdatingPassword(true);
+        setPasswordError("");
+
+        const formData = new FormData(e.currentTarget);
+        const newPassword = formData.get("newPassword") as string;
+
+        if (newPassword.length < 6) {
+            setPasswordError("Password must be at least 6 characters");
+            setUpdatingPassword(false);
+            return;
+        }
+
+        const { updateCustomerPassword } = await import("@/lib/auth");
+        const result = await updateCustomerPassword(newPassword);
+
+        if (result.success) {
+            setShowPasswordReset(false);
+            alert("Password updated successfully!");
+        } else {
+            setPasswordError(result.error || "Failed to update password");
+        }
+        setUpdatingPassword(false);
     }
 
     if (loading) return <div className="min-h-screen flex items-center justify-center font-sans">Loading Profile...</div>;
@@ -135,6 +169,47 @@ export default function ProfilePage() {
                     </div>
                 </div>
             </div>
+
+            {/* Password Reset Modal */}
+            {showPasswordReset && (
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+                    <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full animate-in zoom-in-95 duration-200">
+                        <div className="text-center mb-6">
+                            <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <User size={32} className="text-orange-600" />
+                            </div>
+                            <h2 className="text-2xl font-bold text-espresso font-heading">Set Your Password</h2>
+                            <p className="text-gray-500 mt-2 text-sm">
+                                You are currently using a temporary password. Please set a secure password to protect your account.
+                            </p>
+                        </div>
+
+                        <form onSubmit={handlePasswordUpdate} className="space-y-4">
+                            <div>
+                                <label className="block text-xs font-bold text-espresso/50 uppercase mb-1">New Password</label>
+                                <input
+                                    name="newPassword"
+                                    type="password"
+                                    required
+                                    minLength={6}
+                                    className="w-full p-3 bg-cream rounded-xl border border-latte/20 outline-none focus:ring-2 focus:ring-espresso font-bold text-espresso"
+                                    placeholder="••••••••"
+                                />
+                            </div>
+
+                            {passwordError && <div className="text-red-500 text-sm font-bold text-center bg-red-50 p-2 rounded-lg">{passwordError}</div>}
+
+                            <button
+                                type="submit"
+                                disabled={updatingPassword}
+                                className="w-full bg-espresso text-cream font-bold py-3 rounded-xl shadow-lg hover:shadow-xl hover:bg-espresso/90 transition-all active:scale-95 flex justify-center items-center gap-2"
+                            >
+                                {updatingPassword ? "Updating..." : "Save Password"}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
