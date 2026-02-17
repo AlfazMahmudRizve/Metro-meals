@@ -5,6 +5,7 @@ import { createClient } from "@supabase/supabase-js";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle, Clock, ChefHat, AlertCircle, TrendingUp, Users, DollarSign, Flame, Utensils } from "lucide-react";
 import { updateOrderStatus } from "@/app/actions/updateOrder";
+import { RevenueChart, CategoryPieChart } from "@/components/dashboard/AnalyticsCharts";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -147,30 +148,45 @@ export default function AdminDashboard() {
                 </div>
             </header>
 
-            {/* SECTION 1: HEADS-UP DISPLAY */}
-            <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <MetricCard
-                    title="Revenue (Today)"
-                    value={`৳${totalRevenue.toLocaleString()}`}
-                    icon={<DollarSign className="text-green-600" size={28} />}
-                    color="border-green-500"
-                    trend="RevOps Logic: Motivation 🚀"
-                />
-                <MetricCard
-                    title="Active Orders"
-                    value={activeOrdersCount}
-                    icon={<Flame className="text-orange-500" size={28} />}
-                    color="border-orange-500"
-                    trend={`${pendingOrders.length} Pending Attention`}
-                />
-                <MetricCard
-                    title="Avg Order Value"
-                    value={`৳${aov}`}
-                    icon={<TrendingUp className="text-blue-600" size={28} />}
-                    color="border-blue-500"
-                    trend={aov < 300 ? "⚠️ Low: Suggest Sides!" : "✅ Healthy"}
-                />
-            </section>
+            {/* SECTION 1: HEADS-UP DISPLAY & ANALYTICS */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2 space-y-6">
+                    {/* Metrics Row */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <MetricCard
+                            title="Revenue (Today)"
+                            value={`৳${totalRevenue.toLocaleString()}`}
+                            icon={<DollarSign className="text-green-600" size={28} />}
+                            color="border-green-500"
+                            trend="RevOps Logic: Motivation 🚀"
+                        />
+                        <MetricCard
+                            title="Active Orders"
+                            value={activeOrdersCount}
+                            icon={<Flame className="text-orange-500" size={28} />}
+                            color="border-orange-500"
+                            trend={`${pendingOrders.length} Pending Attention`}
+                        />
+                        <MetricCard
+                            title="Avg Order Value"
+                            value={`৳${aov}`}
+                            icon={<TrendingUp className="text-blue-600" size={28} />}
+                            color="border-blue-500"
+                            trend={aov < 300 ? "⚠️ Low: Suggest Sides!" : "✅ Healthy"}
+                        />
+                    </div>
+
+                    {/* Main Chart */}
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                        <RevenueChart orders={orders} />
+                    </div>
+                </div>
+
+                {/* Side Chart */}
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <CategoryPieChart orders={orders} />
+                </div>
+            </div>
 
             {/* SECTION 2: KITCHEN OS (KANBAN) */}
             <section className="grid grid-cols-1 md:grid-cols-3 gap-6 h-[600px]">

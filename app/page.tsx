@@ -88,7 +88,7 @@ export default function Home() {
       <div className="max-w-6xl mx-auto px-4 py-8 space-y-12">
         {/* Render sections based on categories */}
         {categories.filter(c => c !== "All").map((cat) => {
-          const items = menuData.filter(item => item.category === cat);
+          const items = menuItems.filter(item => item.category === cat);
           if (items.length === 0) return null;
 
           return (

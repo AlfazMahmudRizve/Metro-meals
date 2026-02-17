@@ -27,8 +27,9 @@ export default function CustomerLogin() {
             } else {
                 setError(result.error || "Authentication failed");
             }
-        } catch (err) {
-            setError("An unexpected error occurred");
+        } catch (err: any) {
+            console.error("Unexpected Error in Login Page:", err);
+            setError("An unexpected error occurred: " + (err.message || String(err)));
         } finally {
             setIsLoading(false);
         }

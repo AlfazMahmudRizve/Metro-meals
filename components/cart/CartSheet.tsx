@@ -68,7 +68,7 @@ export default function CartSheet() {
                 clearCart();
                 setIsOpen(false);
                 setShowCheckoutForm(false);
-                router.push('/success');
+                router.push(`/success?id=${result.orderId}`);
             } else {
                 alert("Failed to place order: " + (result.error || "Unknown error"));
             }

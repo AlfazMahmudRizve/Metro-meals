@@ -86,7 +86,7 @@ export async function placeOrder(prevState: any, formData: any) {
         }
 
         // 3. Insert Order
-        const { error: orderError } = await supabase
+        const { data, error: orderError } = await supabase
             .from("orders")
             .insert({
                 customer_id: customerId,
@@ -96,9 +96,13 @@ export async function placeOrder(prevState: any, formData: any) {
                 delivery_address: customer.address,
                 table_number: customer.tableNumber,
                 order_type: customer.tableNumber ? "dine-in" : "delivery"
-            });
+            })
+            .select("id")
+            .single();
 
         if (orderError) throw new Error("Failed to place order: " + orderError.message);
+
+        const orderId = data?.id;
 
         // 4. Send Telegram Notification
         if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
@@ -127,7 +131,7 @@ ${itemsList}
             });
         }
 
-        return { success: true };
+        return { success: true, orderId: orderId };
 
     } catch (error: any) {
         console.error("Order processing failed:", error);

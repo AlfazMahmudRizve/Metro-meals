@@ -8,6 +8,11 @@ const nunito = Nunito({ subsets: ['latin'], variable: '--font-nunito' });
 export const metadata: Metadata = {
   title: 'Metro Meals',
   description: 'Cheesy. Spicy. Ready in 15 mins.',
+  icons: {
+    icon: '/icon.png',
+    shortcut: '/favicon.ico',
+    apple: '/icon.png',
+  },
 };
 
 export default function RootLayout({

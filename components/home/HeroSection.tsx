@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle2, ShieldCheck, Heart } from "lucide-react";
+import { CheckCircle2, ShieldCheck, Heart, User } from "lucide-react";
 
 export default function HeroSection() {
     return (
@@ -22,6 +22,12 @@ export default function HeroSection() {
             </motion.div>
 
             {/* Content */}
+            <div className="absolute top-6 right-6 z-30">
+                <a href="/profile" className="flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-2 rounded-full font-bold text-sm hover:bg-white/20 transition-all">
+                    <User size={18} /> My Profile
+                </a>
+            </div>
+
             <div className="relative z-20 text-center px-4 max-w-4xl mx-auto flex flex-col items-center">
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
