@@ -69,44 +69,52 @@ export default function CartSheet() {
             <AnimatePresence>
                 {!isOpen && (
                     <motion.div
-                        initial={{ y: 100 }}
-                        animate={{ y: 0 }}
-                        exit={{ y: 100 }}
-                        className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-2xl p-4"
+                        initial={{ y: 100, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: 100, opacity: 0 }}
+                        className="fixed bottom-6 left-4 right-4 md:left-auto md:right-8 md:bottom-8 md:w-96 z-50 cursor-pointer"
                         onClick={() => setIsOpen(true)}
                     >
-                        {/* Gamified Progress Bar */}
-                        <div className="mb-3">
-                            <div className="flex justify-between text-xs font-bold mb-1">
-                                {cart.length === 0 ? (
-                                    <span>Start adding to unlock discounts!</span>
-                                ) : (
-                                    <span>{discountActive ? "🎉 Discount Unlocked!" : `Add ${remaining} TK for 15% OFF`}</span>
-                                )}
-                                <span>{Math.round(progress)}%</span>
+                        <div className="bg-metro text-white p-4 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border-2 border-white/20 backdrop-blur-md flex items-center gap-4 hover:scale-[1.02] transition-transform">
+                            {/* Icon & Badge */}
+                            <div className="relative shrink-0">
+                                <div className="bg-white/20 p-3 rounded-full">
+                                    <ShoppingBag size={24} />
+                                </div>
+                                <span className="absolute -top-1 -right-1 bg-cheese text-black text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full border border-metro shadow-sm">
+                                    {cart.length}
+                                </span>
                             </div>
-                            <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                                <motion.div
-                                    className={cn("h-full", discountActive ? "bg-green-500" : "bg-cheese")}
-                                    initial={{ width: 0 }}
-                                    animate={{ width: `${progress}%` }}
-                                />
-                            </div>
-                        </div>
 
-                        <div className="flex justify-between items-center">
-                            <div className="flex items-center gap-3">
-                                <div className={cn("text-white p-3 rounded-full transition-colors", cart.length > 0 ? "bg-metro" : "bg-gray-400")}>
-                                    <ShoppingBag size={20} />
+                            {/* Text Info */}
+                            <div className="flex-1 min-w-0">
+                                <div className="flex justify-between items-end mb-1">
+                                    <p className="font-heading font-bold text-lg leading-none">View Tray</p>
+                                    <p className="font-bold text-lg leading-none">৳{total}</p>
                                 </div>
-                                <div>
-                                    <p className="text-xs text-gray-500">Total</p>
-                                    <p className="font-heading font-bold text-xl">৳{total}</p>
+
+                                {/* Mini Progress Bar */}
+                                <div className="w-full bg-black/20 h-1.5 rounded-full overflow-hidden mb-1">
+                                    <motion.div
+                                        className={cn("h-full", discountActive ? "bg-green-400" : "bg-cheese")}
+                                        initial={{ width: 0 }}
+                                        animate={{ width: `${progress}%` }}
+                                    />
+                                </div>
+                                <p className="text-[10px] md:text-xs text-white/90 font-medium truncate">
+                                    {discountActive
+                                        ? "🎉 15% Discount Unlocked!"
+                                        : `Add ৳${remaining} to unlock 15% OFF`
+                                    }
+                                </p>
+                            </div>
+
+                            {/* Arrow/Action */}
+                            <div className="shrink-0 text-white/50">
+                                <div className="bg-white/10 p-1 rounded-lg">
+                                    <ShoppingBag size={16} className="rotate-12" />
                                 </div>
                             </div>
-                            <button className={cn("px-6 py-2 rounded-xl font-bold text-white transition-colors", cart.length > 0 ? "bg-metro" : "bg-gray-400")}>
-                                {cart.length === 0 ? "Empty Tray" : "View Cart"}
-                            </button>
                         </div>
                     </motion.div>
                 )}
