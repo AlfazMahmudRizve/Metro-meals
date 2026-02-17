@@ -40,6 +40,14 @@ export async function placeOrder(prevState: any, formData: any) {
 
     const { customer, cart, total } = validatedFields.data;
 
+    // 2. Validate Store Status (Respect Manual Override)
+    const { getStoreStatus } = await import("./storeStatus");
+    const status = await getStoreStatus();
+
+    if (!status.isOpen) {
+        return { success: false, error: "Store is currently closed. Please check back later!" };
+    }
+
     try {
         // 2. Upsert Customer (Track spend)
         // Check if customer exists by phone

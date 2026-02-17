@@ -134,7 +134,16 @@ export async function loginCustomer(formData: FormData) {
         }
 
         // Check password
-        const match = await bcrypt.compare(password, customer.password || "");
+        let match = false;
+        if (customer.password) {
+            match = await bcrypt.compare(password, customer.password);
+        } else if (password === "1234") {
+            // Legacy Guest Migration: Allow 1234 if no password set, and update DB
+            const hashedPassword = await bcrypt.hash("1234", 10);
+            await supabase.from("customers").update({ password: hashedPassword }).eq("id", customer.id);
+            match = true;
+        }
+
         if (!match) {
             return { success: false, error: "Invalid credentials" };
         }

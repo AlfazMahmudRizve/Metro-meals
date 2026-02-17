@@ -61,10 +61,13 @@ export default function ProfilePage() {
         router.push("/");
     }
 
+    const [successMessage, setSuccessMessage] = useState("");
+
     async function handlePasswordUpdate(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setUpdatingPassword(true);
         setPasswordError("");
+        setSuccessMessage("");
 
         const formData = new FormData(e.currentTarget);
         const newPassword = formData.get("newPassword") as string;
@@ -79,8 +82,11 @@ export default function ProfilePage() {
         const result = await updateCustomerPassword(newPassword);
 
         if (result.success) {
-            setShowPasswordReset(false);
-            alert("Password updated successfully!");
+            setSuccessMessage("Password updated successfully! Redirecting...");
+            setTimeout(() => {
+                setShowPasswordReset(false);
+                setSuccessMessage("");
+            }, 2000);
         } else {
             setPasswordError(result.error || "Failed to update password");
         }
@@ -198,6 +204,7 @@ export default function ProfilePage() {
                             </div>
 
                             {passwordError && <div className="text-red-500 text-sm font-bold text-center bg-red-50 p-2 rounded-lg">{passwordError}</div>}
+                            {successMessage && <div className="text-green-600 text-sm font-bold text-center bg-green-50 p-2 rounded-lg animate-pulse">{successMessage}</div>}
 
                             <button
                                 type="submit"
