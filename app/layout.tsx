@@ -15,15 +15,22 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+import OrderReadyToast from "@/components/notification/OrderReadyToast";
+
+import { getCustomerSession } from "@/lib/auth";
+
+export default async function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
+  const session = await getCustomerSession();
+
   return (
     <html lang="en">
       <body className={`${playfair.variable} ${lato.variable} font-sans bg-cream text-espresso`}>
         {children}
+        <OrderReadyToast customerId={session?.id} />
         <footer className="bg-white border-t py-8 mt-12">
           <div className="container mx-auto px-4 text-center">
             <p className="font-bold text-espresso">Urban Harvest Cafe &copy; {new Date().getFullYear()}</p>
