@@ -8,15 +8,18 @@ const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PU
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function getMenuItems() {
+    console.log("Server Action: Fetching menu items...");
     const { data, error } = await supabase
         .from("menu_items")
         .select("*")
-        .order("category", { ascending: true }); // simplified sort
+        .order("category", { ascending: true });
 
     if (error) {
-        console.error("Fetch Error:", error);
+        console.error("Server Action Fetch Error:", error);
         return [];
     }
+
+    console.log(`Server Action: Successfully fetched ${data?.length} items.`);
     return data;
 }
 

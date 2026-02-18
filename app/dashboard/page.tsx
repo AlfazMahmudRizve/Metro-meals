@@ -194,165 +194,182 @@ export default function AdminDashboard() {
                 </div>
             </header>
 
-            {/* SECTION 1: HEADS-UP DISPLAY & ANALYTICS */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-6">
-                    {/* Metrics Row */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <MetricCard
-                            title="Revenue (Today)"
-                            value={`৳${totalRevenue.toLocaleString()}`}
-                            icon={<DollarSign className="text-green-600" size={28} />}
-                            color="border-green-500"
-                            trend="RevOps Logic: Motivation 🚀"
-                        />
-                        <MetricCard
-                            title="Active Orders"
-                            value={activeOrdersCount}
-                            icon={<Flame className="text-orange-500" size={28} />}
-                            color="border-orange-500"
-                            trend={`${pendingOrders.length} Pending Attention`}
-                        />
-                        <MetricCard
-                            title="Avg Order Value"
-                            value={`৳${aov}`}
-                            icon={<TrendingUp className="text-blue-600" size={28} />}
-                            color="border-blue-500"
-                            trend={aov < 300 ? "⚠️ Low: Suggest Sides!" : "✅ Healthy"}
-                        />
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start">
+
+                {/* 1. REVENUE SEGMENT */}
+                <div className="space-y-6">
+                    <div className="flex items-center gap-2 mb-2">
+                        <TrendingUp className="text-green-600" />
+                        <h2 className="text-lg font-bold font-heading text-gray-700">Analytics</h2>
                     </div>
 
-                    {/* Main Chart */}
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    {/* Metrics Stack */}
+                    <MetricCard
+                        title="Revenue (Today)"
+                        value={`৳${totalRevenue.toLocaleString()}`}
+                        icon={<DollarSign className="text-green-600" size={24} />}
+                        color="border-green-500"
+                        trend="RevOps Logic"
+                    />
+                    <MetricCard
+                        title="Avg Order Value"
+                        value={`৳${aov}`}
+                        icon={<TrendingUp className="text-blue-600" size={24} />}
+                        color="border-blue-500"
+                        trend={aov < 300 ? "⚠️ Low" : "✅ Healthy"}
+                    />
+
+                    {/* Charts */}
+                    <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                        <h3 className="text-sm font-bold text-gray-500 mb-4 uppercase">Sales Trend</h3>
                         <RevenueChart orders={orders} />
                     </div>
-                </div>
-
-                {/* Side Chart */}
-                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <CategoryPieChart orders={orders} />
-                </div>
-            </div>
-
-            {/* SECTION 2: KITCHEN OS (KANBAN) */}
-            <section className="grid grid-cols-1 md:grid-cols-3 gap-6 h-[600px]">
-                {/* Pending Column */}
-                <Column
-                    title="PENDING"
-                    count={pendingOrders.length}
-                    color="bg-red-50/50 border-red-200"
-                    headerColor="bg-red-600 text-white"
-                    icon={<AlertCircle size={20} />}
-                >
-                    {pendingOrders.map(order => (
-                        <OrderCard
-                            key={order.id}
-                            order={order}
-                            onAction={() => handleStatusUpdate(order.id, "cooking")}
-                            actionLabel="Start Cooking"
-                            actionColor="bg-gray-900 hover:bg-gray-800 text-white"
-                            isPending
-                        />
-                    ))}
-                </Column>
-
-                {/* Cooking Column */}
-                <Column
-                    title="COOKING"
-                    count={cookingOrders.length}
-                    color="bg-yellow-50/50 border-yellow-200"
-                    headerColor="bg-yellow-400 text-black"
-                    icon={<ChefHat size={20} />}
-                >
-                    {cookingOrders.map(order => (
-                        <OrderCard
-                            key={order.id}
-                            order={order}
-                            onAction={() => handleStatusUpdate(order.id, "completed")}
-                            actionLabel="Mark Ready"
-                            actionColor="bg-green-600 hover:bg-green-700 text-white"
-                        />
-                    ))}
-                </Column>
-
-                {/* Completed Column */}
-                <Column
-                    title="READY"
-                    count={completedOrders.length}
-                    color="bg-gray-50 border-gray-200"
-                    headerColor="bg-gray-200 text-gray-700"
-                    icon={<CheckCircle size={20} />}
-                >
-                    {completedOrders.map(order => (
-                        <OrderCard
-                            key={order.id}
-                            order={order}
-                            isCompleted
-                        />
-                    ))}
-                </Column>
-            </section>
-
-            {/* SECTION 3: REVOPS CRM */}
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Whale List */}
-                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <div className="flex items-center gap-2 mb-6">
-                        <Users className="text-purple-600" />
-                        <h2 className="text-xl font-bold font-heading">The &quot;Whale&quot; List 🐋</h2>
-                    </div>
-                    <div className="overflow-x-auto">
-                        <table className="w-full">
-                            <thead>
-                                <tr className="text-left text-xs uppercase text-gray-400 border-b">
-                                    <th className="pb-3">Customer</th>
-                                    <th className="pb-3">Visits</th>
-                                    <th className="pb-3 text-right">Total Spend</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y">
-                                {customers.map(c => (
-                                    <tr key={c.id} className="text-sm font-medium">
-                                        <td className="py-3">
-                                            <div className="font-bold text-gray-900">{c.name}</div>
-                                            <div className="text-xs text-gray-500">{c.phone}</div>
-                                        </td>
-                                        <td className="py-3 text-gray-600">{c.visit_count}</td>
-                                        <td className="py-3 text-right font-bold text-green-600">৳{c.total_spend.toLocaleString()}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                    <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                        <h3 className="text-sm font-bold text-gray-500 mb-4 uppercase">Category Split</h3>
+                        <CategoryPieChart orders={orders} />
                     </div>
                 </div>
 
-                {/* Menu Performance */}
-                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <div className="flex items-center gap-2 mb-6">
-                        <Utensils className="text-metro" />
-                        <h2 className="text-xl font-bold font-heading">Menu Bestsellers 🏆</h2>
+                {/* 2. COOKING SEGMENT (Kitchen OS) */}
+                <div className="space-y-6">
+                    <div className="flex items-center gap-2 mb-2">
+                        <ChefHat className="text-orange-600" />
+                        <h2 className="text-lg font-bold font-heading text-gray-700">Kitchen OS</h2>
                     </div>
+
+                    <MetricCard
+                        title="Active Orders"
+                        value={activeOrdersCount}
+                        icon={<Flame className="text-orange-500" size={24} />}
+                        color="border-orange-500"
+                        trend={`${pendingOrders.length} Pending`}
+                    />
+
+                    {/* Stacked Kanban */}
                     <div className="space-y-4">
-                        {topItems.map(([name, count]: any, idx) => (
-                            <div key={name} className="flex items-center gap-4">
-                                <span className={`w-8 h-8 flex items-center justify-center rounded-full font-bold text-sm ${idx === 0 ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-600'}`}>
-                                    {idx + 1}
-                                </span>
-                                <div className="flex-1">
-                                    <div className="font-bold text-gray-800">{name}</div>
-                                    <div className="w-full bg-gray-100 h-2 rounded-full mt-1 overflow-hidden">
-                                        <div
-                                            className="bg-metro h-full rounded-full"
-                                            style={{ width: `${(count / (topItems[0][1] as number)) * 100}%` }}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="font-bold text-gray-900">{count} sold</div>
-                            </div>
-                        ))}
+                        <Column
+                            title="PENDING"
+                            count={pendingOrders.length}
+                            color="bg-red-50/50 border-red-200"
+                            headerColor="bg-red-600 text-white"
+                            icon={<AlertCircle size={18} />}
+                            maxHeight="max-h-[400px]"
+                        >
+                            {pendingOrders.map(order => (
+                                <OrderCard
+                                    key={order.id}
+                                    order={order}
+                                    onAction={() => handleStatusUpdate(order.id, "cooking")}
+                                    actionLabel="Start Cooking"
+                                    actionColor="bg-gray-900 hover:bg-gray-800 text-white"
+                                    isPending
+                                />
+                            ))}
+                        </Column>
+
+                        <Column
+                            title="COOKING"
+                            count={cookingOrders.length}
+                            color="bg-yellow-50/50 border-yellow-200"
+                            headerColor="bg-yellow-400 text-black"
+                            icon={<ChefHat size={18} />}
+                            maxHeight="max-h-[400px]"
+                        >
+                            {cookingOrders.map(order => (
+                                <OrderCard
+                                    key={order.id}
+                                    order={order}
+                                    onAction={() => handleStatusUpdate(order.id, "completed")}
+                                    actionLabel="Mark Ready"
+                                    actionColor="bg-green-600 hover:bg-green-700 text-white"
+                                />
+                            ))}
+                        </Column>
+
+                        <Column
+                            title="READY"
+                            count={completedOrders.length}
+                            color="bg-gray-50 border-gray-200"
+                            headerColor="bg-gray-200 text-gray-700"
+                            icon={<CheckCircle size={18} />}
+                            maxHeight="max-h-[300px]"
+                        >
+                            {completedOrders.map(order => (
+                                <OrderCard
+                                    key={order.id}
+                                    order={order}
+                                    isCompleted
+                                />
+                            ))}
+                        </Column>
                     </div>
                 </div>
-            </section>
+
+                {/* 3. CUSTOMER SEGMENT (RevOps) */}
+                <div className="space-y-6">
+                    <div className="flex items-center gap-2 mb-2">
+                        <Users className="text-purple-600" />
+                        <h2 className="text-lg font-bold font-heading text-gray-700">Customers</h2>
+                    </div>
+
+                    {/* Whale List */}
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                        <div className="flex items-center gap-2 mb-4">
+                            <Users className="text-purple-600" size={20} />
+                            <h2 className="text-md font-bold font-heading">Top Spenders 🐋</h2>
+                        </div>
+                        <div className="overflow-x-auto">
+                            <table className="w-full">
+                                <thead>
+                                    <tr className="text-left text-[10px] uppercase text-gray-400 border-b">
+                                        <th className="pb-2">Customer</th>
+                                        <th className="pb-2 text-right">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y">
+                                    {customers.map(c => (
+                                        <tr key={c.id} className="text-sm font-medium">
+                                            <td className="py-3">
+                                                <div className="font-bold text-gray-900">{c.name}</div>
+                                                <div className="text-xs text-gray-500">{c.phone}</div>
+                                            </td>
+                                            <td className="py-3 text-right font-bold text-green-600">৳{c.total_spend.toLocaleString()}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {/* Menu Performance */}
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                        <div className="flex items-center gap-2 mb-4">
+                            <Utensils className="text-metro" size={20} />
+                            <h2 className="text-md font-bold font-heading">Bestsellers 🏆</h2>
+                        </div>
+                        <div className="space-y-4">
+                            {topItems.map(([name, count]: any, idx) => (
+                                <div key={name} className="flex items-center gap-3">
+                                    <span className={`w-6 h-6 flex items-center justify-center rounded-full font-bold text-xs ${idx === 0 ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-600'}`}>
+                                        {idx + 1}
+                                    </span>
+                                    <div className="flex-1">
+                                        <div className="font-bold text-sm text-gray-800">{name}</div>
+                                        <div className="w-full bg-gray-100 h-1.5 rounded-full mt-1 overflow-hidden">
+                                            <div
+                                                className="bg-metro h-full rounded-full"
+                                                style={{ width: `${(count / (topItems[0][1] as number)) * 100}%` }}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="font-bold text-xs text-gray-900">{count}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     );
 }
@@ -374,9 +391,9 @@ function MetricCard({ title, value, icon, color, trend }: any) {
     );
 }
 
-function Column({ title, count, color, headerColor, icon, children }: any) {
+function Column({ title, count, color, headerColor, icon, children, maxHeight }: any) {
     return (
-        <div className={`flex flex-col rounded-2xl border ${color} h-full overflow-hidden bg-white shadow-sm`}>
+        <div className={`flex flex-col rounded-2xl border ${color} overflow-hidden bg-white shadow-sm`}>
             <div className={`p-4 font-bold flex justify-between items-center ${headerColor}`}>
                 <div className="flex items-center gap-2 uppercase tracking-widest text-sm">
                     {icon}
@@ -384,7 +401,7 @@ function Column({ title, count, color, headerColor, icon, children }: any) {
                 </div>
                 <span className="bg-black/20 text-white px-2 py-1 rounded text-xs font-bold">{count}</span>
             </div>
-            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50/50">
+            <div className={`flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50/50 ${maxHeight || 'h-full'}`}>
                 <AnimatePresence mode="popLayout">
                     {children}
                 </AnimatePresence>

@@ -30,12 +30,19 @@ export default function Home() {
     async function fetchMenu() {
       try {
         const items: any = await getMenuItems();
-        // Filter out unavailable items if you want, or show them as sold out?
-        // For now, let's show only available ones on the homepage
-        setMenuItems(items.filter((i: any) => i.available !== false));
+
+        // Check if items is an array and has content
+        if (Array.isArray(items) && items.length > 0) {
+          console.log("Client: Using DB items", items.length);
+          setMenuItems(items.filter((i: any) => i.available !== false));
+        } else {
+          // If DB returns empty (or failed silently), fallback to static data
+          console.warn("Client: Database returned empty menu, falling back to static data.");
+          console.log("Client: Static Data", menuData);
+          setMenuItems(menuData as any);
+        }
       } catch (e) {
         console.error("Failed to fetch menu", e);
-        // Fallback to static data if DB fails or empty?
         setMenuItems(menuData as any);
       } finally {
         setLoading(false);
