@@ -13,6 +13,9 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
+import { cookies } from "next/headers";
+import { encrypt } from "@/lib/auth";
+
 // Validation Schema
 const OrderSchema = z.object({
     customer: z.object({
@@ -151,6 +154,19 @@ ${itemsList}
                 }),
             });
         }
+
+        // 5. Auto-Login: Create Session and Set Cookie
+        const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
+        const session = await encrypt({
+            id: customerId,
+            phone: customer.phone,
+            name: customer.name,
+            role: "customer",
+            requiresPasswordChange: true, // Default 1234
+            expires
+        });
+
+        cookies().set("customer_session", session, { expires, httpOnly: true });
 
         return { success: true, orderId: orderId };
 
